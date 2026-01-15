@@ -1,0 +1,26 @@
+[tools]
+node = "25"
+pnpm = "10.23"
+
+[hooks]
+postinstall = 'npx corepack enable'
+
+[settings]
+# This must be enabled to make the hooks work
+experimental = true
+
+
+[tasks.dev]
+run = "pnpm run dev"
+
+[tasks.check]
+description = "Run astro type checks"
+run = "pnpm astro check"
+
+[tasks.build]
+run = "pnpm astro build"
+depends = ["check"]
+
+[tasks.preview]
+run = "pnpm astro preview"
+depends = ["check", "build"]
