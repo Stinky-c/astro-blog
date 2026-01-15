@@ -1,8 +1,35 @@
 ---
 import { getCollection } from "astro:content";
-import Layout from "../../layouts/Layout.astro";
+import DefaultLayout from "../../layouts/DefaultLayout.astro";
+
+import { format } from "date-fns";
 
 const posts = await getCollection("blog");
+
+const get_url = (id: string) => {
+  return `/blog/${id}`;
+};
 ---
 
-<Layout />
+<DefaultLayout>
+  <ul class="list bg-base-200 rounded-box shadow-md">
+    <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Posts</li>
+    {
+      posts.map((item) => (
+        <a href={get_url(item.id)}>
+          <li class="list-row">
+            <div>
+              <h3>{item.data.name}</h3>
+              <p>{item.data.description}</p>
+            </div>
+            <div />
+            <div>
+              <p> {format(item.data.created, "h:m b LLL do, y")}</p>
+              <p> {format(item.data.modified, "h:m b LLL do, y")}</p>
+            </div>
+          </li>
+        </a>
+      ))
+    }
+  </ul>
+</DefaultLayout>
