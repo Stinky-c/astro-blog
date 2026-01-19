@@ -1,7 +1,9 @@
 ---
 import { getCollection, render } from "astro:content";
-import BlogLayout from "../../layouts/BlogLayout.astro";
+import CommonHead from "../../components/CommonHead.astro";
+import { format } from "date-fns";
 
+// Define static outputs
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   return posts.map((post) => ({
@@ -11,11 +13,20 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
-const { author, name, created, modified } = post.data;
+// Content element and markdown headings
+const { Content, headings } = await render(post);
+// front matter
+const { author, title, created, modified } = post.data;
 ---
 
-<h1>{post.data.name}</h1>
-<BlogLayout author={author} created={created} title={name} modified={modified}>
-  <Content />
-</BlogLayout>
+<html>
+  <CommonHead title={title} />
+  <body>
+    <h1>{title} by {author}</h1>
+    <p>Written on: {format(created, "h:m b LLL do, y")}</p>
+    <p>Updated on: {format(modified, "h:m b LLL do, y")}</p>
+    <article>
+      <Content />
+    </article>
+  </body>
+</html>

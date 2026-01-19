@@ -1,5 +1,10 @@
 ---
+import type { MarkdownHeading } from "astro";
 import { Icon } from "astro-icon/components";
+interface Props {
+  headings: MarkdownHeading[];
+}
+const { headings } = Astro.props;
 ---
 
 <div class="navbar bg-base-100 shadow-sm">

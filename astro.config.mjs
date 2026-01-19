@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import mdx from "@astrojs/mdx";
 import vue from "@astrojs/vue";
 import icon from "astro-icon";
+import remarkToc from 'remark-toc';
 
 // https://astro.build/config
 export default defineConfig({
@@ -11,4 +12,9 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
   integrations: [mdx(), icon(), vue()],
+  markdown: {
+    remarkPlugins: [
+      [remarkToc, { ordered: true }]
+    ]
+  }
 });

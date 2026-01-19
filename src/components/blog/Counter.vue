@@ -1,7 +1,9 @@
 <script setup>
-import { ref } from "vue";
-let value = ref(0);
+import { useStore } from "@nanostores/vue";
+import { $counter } from "../../stores/blog";
+
+const counter = useStore($counter);
 </script>
 <template>
-  <button class="btn" @click="value++">{{ value }}</button>
+  <button class="btn" @click="$counter.set(counter++)">{{ counter }}</button>
 </template>
