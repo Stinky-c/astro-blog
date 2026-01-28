@@ -11,25 +11,29 @@ const get_url = (id: string) => {
 };
 ---
 
-<DefaultLayout>
-  <ul class="list bg-base-200 rounded-box shadow-md">
-    <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Posts</li>
-    {
-      posts.map((item) => (
-        <a href={get_url(item.id)}>
-          <li class="list-row">
-            <div>
-              <h3>{item.data.title}</h3>
-              <p>{item.data.description}</p>
-            </div>
-            <div />
-            <div>
-              <p> {format(item.data.created, "h:m b LLL do, y")}</p>
-              <p> {format(item.data.modified, "h:m b LLL do, y")}</p>
-            </div>
-          </li>
-        </a>
-      ))
-    }
-  </ul>
+<DefaultLayout title="Blog Index">
+  <div
+    class="min-w-full min-h-full grid grid-cols-1 grid-rows-1 content-center bg-red-600"
+  >
+    <ul class="list bg-base-200 rounded-box shadow-md">
+      <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Posts</li>
+      {
+        posts.map((item) => (
+          <a href={get_url(item.id)}>
+            <li class="list-row">
+              <div>
+                <h3>{item.data.title}</h3>
+                <p>{item.data.description}</p>
+              </div>
+              <div />
+              <div>
+                <p> {format(item.data.created, "h:m b LLL do, y")}</p>
+                <p> {format(item.data.modified, "h:m b LLL do, y")}</p>
+              </div>
+            </li>
+          </a>
+        ))
+      }
+    </ul>
+  </div>
 </DefaultLayout>

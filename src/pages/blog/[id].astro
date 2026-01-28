@@ -1,7 +1,9 @@
 ---
 import { getCollection, render } from "astro:content";
-import CommonHead from "../../components/CommonHead.astro";
 import { format } from "date-fns";
+import BlogLayout from "../../layouts/BlogLayout.astro";
+import { transformToNestedArray } from "../../utils/headings";
+import Headings from "../../components/blog/Headings.astro";
 
 // Define static outputs
 export async function getStaticPaths() {
@@ -17,16 +19,27 @@ const { post } = Astro.props;
 const { Content, headings } = await render(post);
 // front matter
 const { author, title, created, modified } = post.data;
+
+const converted_heading = transformToNestedArray(headings);
 ---
 
-<html>
-  <CommonHead title={title} />
-  <body>
-    <h1>{title} by {author}</h1>
-    <p>Written on: {format(created, "h:m b LLL do, y")}</p>
-    <p>Updated on: {format(modified, "h:m b LLL do, y")}</p>
-    <article>
-      <Content />
-    </article>
-  </body>
-</html>
+<BlogLayout title={title}>
+  <div class="flex flex-col items-center justify-center min-h-screen">
+    <body>
+      <div>
+        <h1>{title} by {author}</h1>
+        <p>Written on: {format(created, "h:m b LLL do, y")}</p>
+        <p>
+          Updated on: <p class="tooltip" data-tip={modified}>
+            {format(modified, "h:m b LLL do, y")}
+          </p>
+        </p>
+      </div>
+      <main class="">
+        <article class="prose min-w-19/20 max-w-full">
+          <Content />
+        </article>
+      </main>
+    </body>
+  </div>
+</BlogLayout>

@@ -1,0 +1,25 @@
+---
+import type { NestedItem } from "../../utils/headings";
+interface Props {
+  headings: NestedItem[];
+}
+
+const { headings } = Astro.props;
+---
+
+<ul class="list">
+  {
+    headings.map((value) => {
+      return (
+        <>
+          <li class="list-row bg-red-300">
+            <div class="">{value.depth}</div>
+            <a href={`#${value.slug}`} class="link link-hover">
+              {value.text}
+            </a>
+          </li>
+        </>
+      );
+    })
+  }
+</ul>

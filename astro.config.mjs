@@ -13,6 +13,12 @@ export default defineConfig({
   },
   integrations: [mdx(), icon(), vue()],
   markdown: {
+    shikiConfig: {
+      themes: {
+        light: "github-light",
+        dark: "github-dark-dimmed"
+      }
+    },
     remarkPlugins: [
       [remarkToc, { ordered: true }]
     ]
